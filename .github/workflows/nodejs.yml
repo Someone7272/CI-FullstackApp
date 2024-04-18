@@ -32,7 +32,7 @@ jobs:
 
       # Install the dependencies.
       - name: Install Dependencies
-        run: cd backend && npm ci
+        run: cd backend && npm ci && npm init
 
       # Run the tests.
       - name: Run tests
@@ -40,7 +40,7 @@ jobs:
 
       # Run the linter.
       - name: Run code linting
-        run: cd backend && npm init && npm run lint
+        run: cd backend && npm run lint
 
       # Send a console message at completion.
       - name: Show completion message
