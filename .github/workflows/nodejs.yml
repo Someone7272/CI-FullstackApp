@@ -17,7 +17,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16, 18]
+        node-version: [16.x, 18.x]
 
     steps:
       # Check out the code from the repository.
@@ -32,16 +32,19 @@ jobs:
 
       # Install the dependencies.
       - name: Install Dependencies
-        run: npm install
+        run: cd backend && npm ci
 
       # Run the tests.
-      - run: 
+      - name: Run tests
+        run: cd backend && npm test
 
       # Run the linter.
-      - run: 
+      - name: Run code linting
+        uses: cd backend && npm run lint
 
       # Send a console message at completion.
-      - run: |
+      - name: Show completion message
+        run: |
           echo "Hello ${{github.actor}}. You pushed to ${{github.repository}} at $(date)."
 
         
