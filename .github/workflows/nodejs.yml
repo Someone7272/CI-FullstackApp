@@ -2,7 +2,12 @@ name: ci-fullstack-workflow
 
 # Ensure the workflow runs on schedule (Sunday at 0:00) and on push to the main branch
 on:
-  
+  schedule:
+    - cron: '0 0 * * 0'
+
+  push:
+    branches:
+      - main
 
 #Use a matrix strategy to use Node.js versions 16.x and 18.x
 jobs:
@@ -11,17 +16,23 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      matrix:
+        node-version: [16, 18]
 
     steps:
       # Check out the code from the repository.
-      - uses: 
+      - name: Check out repository
+        uses: actions/checkout@v4
+
       # Set up a Node.js environment using the specified node version.
-      - uses: 
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
         with:
-          node-version: 
+          node-version: ${{ matrix.node-version }}
 
       # Install the dependencies.
-      - run: 
+      - name: Install Dependencies
+        run: npm install
 
       # Run the tests.
       - run: 
